@@ -1,0 +1,95 @@
+<!DOCTYPE html ng-app="angularstrapApp" >
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="angularstrapApp">
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <link rel="stylesheet" href="assets/css/bootstrapFlatly/bootstrap.css">
+	<style>
+		ul {
+			list-style: none;
+			padding-left: 0;
+		}
+		.glyphicon-refresh-animate {
+			-animation: spin .7s infinite linear;
+			-webkit-animation: spin2 .7s infinite linear;
+		}
+
+		@-webkit-keyframes spin2 {
+			from { -webkit-transform: rotate(0deg);}
+			to { -webkit-transform: rotate(360deg);}
+		}
+
+		@keyframes spin {
+			from { transform: scale(1) rotate(0deg);}
+			to { transform: scale(1) rotate(360deg);}
+		}
+	</style>
+</head>
+<title>Hans Anker Quick Survey</title>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <!--<nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                    <a class="navbar-brand" href="#/">Survey</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#/about">About</a>
+                        </li>
+                        <li>
+                            <a href="#">Link</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Action</a>
+                                </li>
+                                <li>
+                                    <a href="#">Another action</a>
+                                </li>
+                                <li>
+                                    <a href="#">Something else here</a>
+                                </li>
+                                <li class="divider">
+                                </li>
+                                <li>
+                                    <a href="#">Separated link</a>
+                                </li>
+                                <li class="divider">
+                                </li>
+                                <li>
+                                    <a href="#">One more separated link</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>                                  
+                </div>
+            </nav>-->
+        </div>
+    </div>
+    <!-- start dynamic content -->
+    <div ui-view=""></div>
+    <!-- end dynamic content -->
+</div>
+</body>
+<!-- load jQuery from CDN --> 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!-- load BootStrap from CDN --> 
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/libs/angular/angular.js"></script>
+<script src="assets/libs/angular/angular-ui-router.js"></script>
+<script src="assets/js/firebase.js"></script>
+<script src="assets/js/angularfire.min.js"></script>
+<script src="app/app.modules.js"></script>
+<script src="app/app.states.js"></script>
+<script src="app/components/home/home.controller.js"></script>
+<script src="app/components/home/home.services.js"></script>
+<script src="app/components/about/about.controller.js"></script>
+<script src="app/components/about/about.services.js"></script>
+
+</html>
