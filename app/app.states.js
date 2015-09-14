@@ -25,6 +25,13 @@ angular.module('angularstrapApp')
         })
         .state('about', {
             // we'll add another state soon
+            url: '/about/:surveyID',
+            templateUrl: 'app/components/about/about.view.html',
+            controller: 'aboutController',
+            controllerAs: 'ctrl'
+        })
+		.state('aboutmain', {
+            // we'll add another state soon
             url: '/about',
             templateUrl: 'app/components/about/about.view.html',
             controller: 'aboutController',

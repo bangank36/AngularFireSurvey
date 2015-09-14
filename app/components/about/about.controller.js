@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     var controllerId = 'aboutController';
-    angular.module('angularstrapControllers', []).controller(controllerId, ["$scope", "$firebaseArray",
+    angular.module('angularstrapControllers', []).controller(controllerId, ["$scope", "$firebaseArray", "$firebaseObject",
 
         /**
          * Primary entry point for application
@@ -12,13 +12,14 @@
          * @param {string} [APIHOST] constant for pointing to REST server
          *
          **/
-          function aboutController($scope, $firebaseArray, APIHOST) {
+          function aboutController($scope, $firebaseArray, $firebaseObject, APIHOST) {
             var vm = this;
 
             function reloadPage() {
                 $window.location.reload();
             }
-			console.log(window.location);
+			
+			$scope.headerID = window.location.hash.split("#/about/")[1];			
 			$scope.point = 0;
 			$scope.buttonText = "Put the email in text box";
 			var defaultSelection = {};
@@ -33,6 +34,16 @@
 			var questionTemplateInstance = rootInstance.child("SurveyTemplate");
 			var questionList = questionTemplateInstance.child("TPP/questions");
 
+			//GET QUESTION HEADER
+			var headersArray = $firebaseObject(headerInstance.child($scope.headerID));
+			headersArray.$loaded().then(function(result) {
+				$scope.Company = result.company;
+				$scope.closeDate = result.closeDate;
+				$scope.createdBy = result.createdBy;
+				$scope.emails = result.emails;
+				$scope.openDate = result.openDate;
+			});
+			
 			//GET QUESTION TEMPLATE
 			$scope.questions = $firebaseArray(questionList);
 			$scope.questions.$loaded().then(function(list) {
