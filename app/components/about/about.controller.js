@@ -12,7 +12,7 @@
          * @param {string} [APIHOST] constant for pointing to REST server
          *
          **/
-          function aboutController($scope, $firebaseArray, $firebaseObject, APIHOST) {
+          function aboutController($scope, $firebaseArray, $firebaseObject) {
             var vm = this;
 
             function reloadPage() {
