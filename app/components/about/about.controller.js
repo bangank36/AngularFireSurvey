@@ -19,7 +19,7 @@
                 $window.location.reload();
             }
 			
-			$scope.headerID = window.location.hash.split("#/about/")[1];			
+			$scope.headerID = window.location.hash.split("#/about/")[1] || "-JxaCSGNlbOGJVQf-XVp";			
 			$scope.point = 0;
 			$scope.buttonText = "Put the email in text box";
 			var defaultSelection = {};
@@ -36,34 +36,37 @@
 
 			//GET QUESTION HEADER
 			var headersArray = $firebaseObject(headerInstance.child($scope.headerID));
+			var templateId = "";
 			headersArray.$loaded().then(function(result) {
 				$scope.Company = result.company;
 				$scope.closeDate = result.closeDate;
 				$scope.createdBy = result.createdBy;
 				$scope.emails = result.emails;
 				$scope.openDate = result.openDate;
+				getQuestionTemplate(result.templateID);
 			});
 			
 			//GET QUESTION TEMPLATE
-			$scope.questions = $firebaseArray(questionList);
-			$scope.questions.$loaded().then(function(list) {
-				angular.forEach(list, function(item) {
-					defaultSelection[item.$id] = {};
-					item.answers.forEach(function(answer) {
-						defaultSelection[item.$id][answer.id] = 0;
-					});				
+			var getQuestionTemplate = function(templateId) {
+				$scope.questions = $firebaseArray(questionTemplateInstance.child(templateId + "/questions"));
+				$scope.questions.$loaded().then(function(list) {
+					list.forEach(function(question) {
+						defaultSelection[question.ID] = {};
+						question.answers.forEach(function(answer) {
+							defaultSelection[question.ID][answer.id] = 0;
+						});	
+					});
 				});
-				//console.log(defaultSelection);
-			});
+			}
 
 			// GET USER SELECT				
 			var $selectionArray = null;				 
 			$scope.checkUserEmail = function() {
 				$scope.loadingUserInfo = true;
-				userReaction.orderByChild("companyContactPersonEmail").equalTo($scope.userEmail).once('value', function(data) {					
+				reactionInstance.orderByChild("companyContactPersonEmail").equalTo($scope.userEmail).once('value', function(data) {					
 				    $scope.userSelection = {};		
 					if (data.exists()) {
-						var answerRef = reactionInstance.child("TPP/" + Object.keys(data.val())[0] + "/answers");
+						var answerRef = reactionInstance.child(Object.keys(data.val())[0] + "/answers");
 						$selectionArray = $firebaseArray(answerRef);		
 						$selectionArray.$loaded().then(function(result) {
 							$scope.loadingUserInfo = false;
@@ -75,7 +78,7 @@
 						$scope.userStatus = "Resume Survey";
 						$scope.doSurvey = true;
 					} else {
-						var newUserRef = reactionInstance.child("TPP");
+						var newUserRef = reactionInstance;
 						var reactionList = $firebaseArray(newUserRef);
 						reactionList.$loaded().then(function() {
 							$scope.newUser = true;
