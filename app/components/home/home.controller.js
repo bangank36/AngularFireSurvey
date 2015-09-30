@@ -4,25 +4,45 @@
     angular.module('angularstrapApp')
         .controller('homeController', homeController);
 
-    homeController.$inject = ["$scope", "$http", "$window", "$q", "asyncService"];
+    homeController.$inject = ["$scope", "$firebaseArray", "$firebaseObject"];
 
-    function homeController($scope, $http, $window, $q, asyncService) {
+    function homeController($scope, $firebaseArray, $firebaseObject) {
 
             var vm = this;
 
-            //services
-            vm.angularstrapService = asyncService;
+            var defaultSelection = {};
+			//CREATE A FIREBASE REFERENCE
+			var rootInstance = new Firebase("https://fiery-heat-7231.firebaseio.com");
+			//GET HEADER INFO
+			var headerInstance = rootInstance.child("SurveyHeader");
+			//GET REACTION INFO
+			var reactionInstance = rootInstance.child("SurveyReactions");
+			var userReaction = reactionInstance.child("TPP");								
+			//GET REACTION INFO
+			var questionTemplateInstance = rootInstance.child("SurveyTemplate");
+			var questionList = questionTemplateInstance.child("TPP/questions");
 
-            asyncService.getHeroText();
-
-            // from async service
-            vm.HeroHeader = asyncService.retrievedData.HeroHeader;
-            vm.HeroText = asyncService.retrievedData.HeroText;
-
-            // subsections
-            vm.col0heading = "Subsections";
-            vm.col0text = "I may populate this with a microservice! Or have this be a separate view. This template uses Angular UI which is better than using the Angular router in my opinion.";
-
+			// RETRIEVE THE HEADERS DATA FROM FIREBASE
+			$scope.headersArray = [];
+			$firebaseArray(headerInstance).$loaded().then(function(headerData) {
+				headerData.forEach(function(header) {
+					console.log(header);
+					var duplicate = false;
+					var duplicateIndex = -1;
+					$scope.headersArray.filter(function(value, index) {
+						duplicate = value.company  === header.company; 
+						duplicateIndex = index;
+					});
+					// GROUP ALL HEADERS BELONG TO SAME COMPANY NAME
+					if (!duplicate) {
+						$scope.headersArray.push({company: header.company, group: [header]});
+					} else {
+						$scope.headersArray[duplicateIndex].group.push(header);
+					}
+				});
+			});
+			
+			
             return vm;
        }
 })();

@@ -14,9 +14,9 @@ angular.module('angularstrapApp')
 
     $stateProvider
         .state('home', {
-            url: '/',
-            templateUrl: 'app/components/about/about.view.html',
-            controller: "aboutController",
+            url: '/home',
+            templateUrl: 'app/components/home/home.view.html',
+            controller: "homeController",
             controllerAs: 'ctrl'
         })
         .state('404', {

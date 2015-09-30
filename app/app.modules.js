@@ -4,6 +4,7 @@
 
 angular
     .module('angularstrapApp', [
+		'ui.bootstrap',
         'ui.router',
         'angularstrapServices',
         'angularstrapControllers',
