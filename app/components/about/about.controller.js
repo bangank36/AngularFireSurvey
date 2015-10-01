@@ -87,7 +87,8 @@
 								company: $scope.userCompany || "FireBase",
 								companyContactPersonEmail: $scope.userEmail,
 								companyContactPerson: $scope.userName || $scope.userEmail.split("@")[0],
-								complete: false
+								complete: false,
+								headerID: $scope.headerID
 							});
 							$scope.loadingUserInfo = false;
 							$scope.userStatus = "Start New Survey";

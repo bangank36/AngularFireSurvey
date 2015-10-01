@@ -26,11 +26,19 @@
 				headerData.forEach(function(header, index) {
 					console.log(header);
 					var duplicate = false;
-					var duplicateIndex = -1;
+					var duplicateIndex = -1;	
+					var insertIndex = -1;
 					$scope.headersArray.filter(function(value, index) {
 						duplicate = value.company  === header.company; 
 						duplicateIndex = index;
 					});
+					 // GROUP ALL HEADERS BELONG TO SAME COMPANY NAME
+					if (!duplicate) {
+						$scope.headersArray.push({company: header.company, group: []});
+						insertIndex = $scope.headersArray.length - 1;
+					} else {
+						insertIndex = duplicateIndex;
+					}
 					// GET THE TEMPLATE KIND VIA TEMPLATEID
 					var promiseGetKind = $firebaseObject(questionTemplateInstance.child(header.templateID)).$loaded().then(function(question) {
 						header.kind = question.nameSurvey;
@@ -52,12 +60,8 @@
 						}						
 					});
 					$q.all([promiseGetKind, promiseCountSurvey]).then(function() {
-						 // GROUP ALL HEADERS BELONG TO SAME COMPANY NAME
-						if (!duplicate) {
-							$scope.headersArray.push({company: header.company, group: [header]});
-						} else {
-							$scope.headersArray[duplicateIndex].group.push(header);
-						}
+						// use insertIndex to select header position in array
+						$scope.headersArray[insertIndex].group.push(header);
 					});					
 				});
 			});
