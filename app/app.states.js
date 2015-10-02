@@ -19,6 +19,12 @@ angular.module('angularstrapApp')
             controller: "homeController",
             controllerAs: 'ctrl'
         })
+		.state('report', {
+            url: '/report',
+            templateUrl: 'app/components/report/report.view.html',
+            controller: "reportController",
+            controllerAs: 'ctrl'
+        })
         .state('404', {
             url: '/404',
             templateUrl: 'app/shared/404.html'
