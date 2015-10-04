@@ -20,7 +20,7 @@ angular.module('angularstrapApp')
             controllerAs: 'ctrl'
         })
 		.state('report', {
-            url: '/report',
+            url: '/report/:headerID',
             templateUrl: 'app/components/report/report.view.html',
             controller: "reportController",
             controllerAs: 'ctrl'

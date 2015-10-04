@@ -11,32 +11,30 @@
 		  </h4>
 		</div>
 		<div collapse="isCollapsed">
-			<div class="panel-body">
-				<table class="table" ng-repeat="header in group.group">
-					<thead>
-					  <tr>
-						<th>Kind</th>
-						<th>Contact Person Customer</th>
-						<th>Team name</th>
-						<th>Start Date</th>
-						<th>End Date</th>
-						<th># Inprogress</th>
-						<th># Complete</th>
-					  </tr>
-					</thead>
-					<tbody>
-					  <tr>
-						<td>{{header.kind}}</td>						
-						<td>{{header.emails}}</td>						
-						<td>{{header.teamName}}</td>						
-						<td>{{header.closeDate}}</td>						
-						<td>{{header.openDate}}</td>						
-						<td>{{header.inprogress || 0}}</td>						
-						<td>{{header.complete || 0}}</td>						
-					  </tr>					  
-					</tbody>
-				  </table>
-			</div>
+			<table class="table table-bordered">
+				<thead>
+				  <tr>
+					<th>Kind</th>
+					<th>Contact Person Customer</th>
+					<th>Team name</th>
+					<th>Start Date</th>
+					<th>End Date</th>
+					<th># Inprogress</th>
+					<th># Complete</th>
+				  </tr>
+				</thead>
+				<tbody>
+				  <tr class="detail-row" ng-click="redirectToDetail(header.$id)" ng-repeat-start="header in group.group" ng-repeat-end>
+					<td>{{header.kind}}</td>						
+					<td>{{header.emails}}</td>						
+					<td>{{header.teamName}}</td>						
+					<td>{{header.closeDate}}</td>						
+					<td>{{header.openDate}}</td>						
+					<td>{{header.inprogress || 0}}</td>						
+					<td>{{header.complete || 0}}</td>						
+				  </tr>					  
+				</tbody>
+			  </table>
 		</div>
 	</div>
 </div>

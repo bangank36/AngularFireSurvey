@@ -24,7 +24,30 @@
 			//GET REACTION INFO
 			var questionTemplateInstance = rootInstance.child("SurveyTemplate");
 
-			var headerID = "-JxaCSGNlbOGJVQf-XVp";
+			// Get header details
+			var headerID = window.location.hash.split("#/report/")[1] || "-JxaCSGNlbOGJVQf-XVp";
+			$firebaseObject(headerInstance.child(headerID)).$loaded().then(function(headerDetail) {
+				$scope.company = headerDetail.company;
+				$scope.emails = headerDetail.emails;
+				var promiseGetKind = $firebaseObject(questionTemplateInstance.child(headerDetail.templateID)).$loaded().then(function(question) {
+						$scope.kind = question.nameSurvey;						
+					});
+				var promiseCountSurvey = reactionInstance.orderByChild("headerID").equalTo(headerDetail.$id).once('value', function(data) {
+						// data is an object with matched headerID
+					if (data.exists()) {
+						var reactions = Object.keys(data.val());
+						// iterate over matched headerID
+						reactions.forEach(function(id) {
+							if (data.val()[id].complete) {
+								$scope.complete = $scope.complete ? header.complete + 1 : 1;
+							} else {
+								$scope.inprogress = $scope.inprogress ? $scope.inprogress + 1 : 1;
+							}
+							$scope.$apply();
+						});							
+					}						
+				});
+			});
 								
 			questionTemplateInstance.orderByChild("headerID").equalTo(headerID).once('value', function(data) {
 				var reportInfoTemplate  = {
@@ -41,46 +64,49 @@
 					answerResult: ""
 				};
 				var reportInfoList = [];
-				var questionTemplate = data.val()[Object.keys(data.val())[0]];
-				questionTemplate.questions.forEach(function(question, index) {
-					var reportInfoRow = angular.copy(reportInfoTemplate);
-					reportInfoRow.question = index + 1;
-					reportInfoRow.questionID = question.ID; // TODO: make the ID field consistent
-					reportInfoRow.questionTitle = question.titleEN;
-					reportInfoRow.questionSubject = question.subject;
-					reportInfoRow.questionTheme = question.theme;
-					// Iterate over answers
-					question.answers.forEach(function(answer, index) {
-						var reportInfoRowWithAnswer = angular.copy(reportInfoRow);
-						reportInfoRowWithAnswer.answer = index + 1;
-						reportInfoRowWithAnswer.answerID = answer.id; // TODO: make the ID field consistent
-						reportInfoRowWithAnswer.answerTitle = answer.titleEN;
-						reportInfoRowWithAnswer.answerCulture = answer.culture;
-						// Put the row into array
-						reportInfoList.push(reportInfoRowWithAnswer);
-					});
-				});
-				var combinedReportList = []
-				// Combine with reactions
-				reactionInstance.orderByChild("headerID").equalTo(headerID).once('value', function(data) {
-					var reactionsList = Object.keys(data.val());
-					reactionsList.forEach(function(key) {
-						var reaction = data.val()[key];
-						var copyReportInfoList = angular.copy(reportInfoList);
-						copyReportInfoList.forEach(function(infoRow) {
-							infoRow.responder = reaction.companyContactPerson; // TODO: may need changed later
-							infoRow.date = reaction.date;
-							infoRow.company = reaction.company;
-							// Combine the rows list to object answer, access by question and answer id
-							infoRow.answerResult = reaction.answers[infoRow.questionID][infoRow.answerID];
+				if (data.val()) {
+					var questionTemplate = data.val()[Object.keys(data.val())[0]];
+					questionTemplate.questions.forEach(function(question, index) {
+						var reportInfoRow = angular.copy(reportInfoTemplate);
+						reportInfoRow.question = index + 1;
+						reportInfoRow.questionID = question.ID; // TODO: make the ID field consistent
+						reportInfoRow.questionTitle = question.titleEN;
+						reportInfoRow.questionSubject = question.subject;
+						reportInfoRow.questionTheme = question.theme;
+						// Iterate over answers
+						question.answers.forEach(function(answer, index) {
+							var reportInfoRowWithAnswer = angular.copy(reportInfoRow);
+							reportInfoRowWithAnswer.answer = index + 1;
+							reportInfoRowWithAnswer.answerID = answer.id; // TODO: make the ID field consistent
+							reportInfoRowWithAnswer.answerTitle = answer.titleEN;
+							reportInfoRowWithAnswer.answerCulture = answer.culture;
+							// Put the row into array
+							reportInfoList.push(reportInfoRowWithAnswer);
 						});
-						combinedReportList = combinedReportList.concat(copyReportInfoList);
 					});
-					$scope.reportInfo = combinedReportList;
-					getCultureSummary();
-					getQuestionTheme();
-					$scope.$apply();
-				});
+					var combinedReportList = []
+					// Combine with reactions
+					reactionInstance.orderByChild("headerID").equalTo(headerID).once('value', function(data) {
+						var reactionsList = Object.keys(data.val());
+						reactionsList.forEach(function(key) {
+							var reaction = data.val()[key];
+							var copyReportInfoList = angular.copy(reportInfoList);
+							copyReportInfoList.forEach(function(infoRow) {
+								infoRow.responder = reaction.companyContactPerson; // TODO: may need changed later
+								infoRow.date = reaction.date;
+								infoRow.company = reaction.company;
+								// Combine the rows list to object answer, access by question and answer id
+								infoRow.answerResult = reaction.answers[infoRow.questionID][infoRow.answerID];
+							});
+							combinedReportList = combinedReportList.concat(copyReportInfoList);
+						});
+						$scope.reportInfo = combinedReportList;
+						getCultureSummary();
+						getQuestionTheme();
+						$scope.$apply();
+					});
+				}
+				
 				function getCultureSummary() {
 					var cultureSummary = {
 						"proactive": 0,
