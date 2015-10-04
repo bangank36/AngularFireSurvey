@@ -10,3 +10,9 @@ nvd3[data="barChartData"] svg {
 	margin-left: 10%;
 	overflow: visible;
 }
+.detail-row {
+	cursor: pointer;
+}
+.detail-row:hover {
+	background-color: #F2F1EF;
+}

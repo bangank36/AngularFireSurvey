@@ -4,9 +4,9 @@
     angular.module('angularstrapApp')
         .controller('homeController', homeController);
 
-    homeController.$inject = ["$scope", "$q" ,"$firebaseArray", "$firebaseObject"];
+    homeController.$inject = ["$scope", "$location", "$q" ,"$firebaseArray", "$firebaseObject"];
 
-    function homeController($scope, $q, $firebaseArray, $firebaseObject) {
+    function homeController($scope, $location, $q, $firebaseArray, $firebaseObject) {
 
             var vm = this;
 
@@ -66,7 +66,10 @@
 				});
 			});
 			
-			
+			$scope.redirectToDetail = function(headerID) {
+				$location.path("report/" + headerID);
+			}
+						
             return vm;
        }
 })();
