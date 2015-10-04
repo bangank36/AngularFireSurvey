@@ -6,6 +6,7 @@ angular
     .module('angularstrapApp', [
 		'ui.bootstrap',
         'ui.router',
+		'nvd3ChartDirectives',
         'angularstrapServices',
         'angularstrapControllers',
 		'firebase'

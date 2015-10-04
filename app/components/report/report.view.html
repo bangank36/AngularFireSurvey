@@ -29,6 +29,55 @@
 	</div>
 </div>
 <div class="row">
+	<div class="col-xs-6">
+		<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">Culture Overview:</div>
+		<!-- Chart -->	
+		<nvd3-pie-chart
+				data="pieChartCulture"
+				width="300"
+				height="300"
+				margin="{left:10,top:10,bottom:10,right:10}"
+				id="exampleId"
+				x="xFunction()"
+				y="yFunction()"
+				showLabels="true"
+				pieLabelsOutside="true"
+				showValues="true"
+				labelType="percent"
+				showLegend="true">
+			<svg style="height:300;width:300"></svg>
+		</nvd3-pie-chart>
+		</div>
+	</div>   
+	<div class="col-xs-6">	
+		<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">Summary Answer:</div>
+		<!-- Table -->
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>
+						Answer.Culture
+					</th>
+					<th>
+						Sum of Answer.Culture
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+			  <tr ng-repeat="(key, value) in cultureSummary">
+				<td>{{key}}</td>
+				<td>{{value}}</td>
+			  </tr>
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="row">
     <div class="panel panel-default">
 	<!-- Default panel contents -->
 	<div class="panel-heading">Summary Question Theme:</div>

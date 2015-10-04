@@ -92,6 +92,7 @@
 						cultureSummary[culture] = cultureSummary[culture] + info.answerResult;
 					});
 					$scope.cultureSummary = cultureSummary;
+					getPieChartData();
 					$scope.$apply(); 
 				};
 				function getQuestionTheme() {
@@ -121,11 +122,10 @@
 							questionTheme.subject[info.questionSubject] = {};
 						} 
 						// Sum all answer culture, if not exist, set value to 0
-						if (questionTheme.subject[info.questionSubject] && questionTheme.subject[info.questionSubject].hasOwnProperty(info.answerCulture)) {
-							questionTheme.subject[info.questionSubject][info.answerCulture] += info.answerResult; 
-						} else {
-							questionTheme.subject[info.questionSubject][info.answerCulture] = 0; 
-						}
+						if (!(questionTheme.subject[info.questionSubject] && questionTheme.subject[info.questionSubject].hasOwnProperty(info.answerCulture))) {
+							questionTheme.subject[info.questionSubject][info.answerCulture] = 0; 						
+						} 
+						questionTheme.subject[info.questionSubject][info.answerCulture] += info.answerResult; 
 						// Add theme data to array
 						if (questionThemeIndex !== -1) {
 							questionThemeArray[questionThemeIndex] = questionTheme;
@@ -149,8 +149,28 @@
 					});
 					return tableData;
 				}
-			});	
-			
+				function getPieChartData() {
+					$scope.pieChartCulture = [];
+					for (var key in $scope.cultureSummary) {
+						var pie = {
+							key: key,
+							y: $scope.cultureSummary[key]
+						}	
+						$scope.pieChartCulture.push(pie);						
+					}					
+					$scope.xFunction = function(){
+						return function(d) {
+							return d.key;
+						};
+					}
+					$scope.yFunction = function(){
+						return function(d) {
+							return d.y;
+						};
+					}
+					$scope.$apply();
+				}
+			});					       
             return vm;
        }
 })();
