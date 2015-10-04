@@ -1,3 +1,124 @@
 <div class="row">
-	Report panel
+    <h1>Survey Detail (for complete surveys)<h1>
+</div>
+<div class="row">
+    <div class="panel panel-default">
+	<!-- Default panel contents -->
+	<div class="panel-heading">Survey Header:</div>
+	<!-- Table -->
+	<table class="table">
+		<tbody>
+		  <tr>
+			<td>Customer</td>
+			<td>{{}}</td>
+			<td># Completed</td>
+			<td>{{}}</td>
+		  </tr>
+		  <tr>
+			<td>Contact person customer</td>
+			<td>{{}}</td>
+			<td># In Progress</td>
+			<td>{{}}</td>
+		  </tr>
+		  <tr>
+			<td>Kind</td>
+			<td>{{}}</td>
+		  </tr>
+		</tbody>
+		</table>
+	</div>
+</div>
+<div class="row">
+    <div class="panel panel-default">
+	<!-- Default panel contents -->
+	<div class="panel-heading">Summary Question Theme:</div>
+	<!-- Table -->
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th rowspan=2>Question.Theme</th>
+				<th rowspan=2>Question.Subject</th>
+				<th colspan=3>Question.Culture</th>
+			</tr>
+			<tr>
+				<th>Reactive</th>
+				<th>Active</th>
+				<th>Proactive</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="questionTheme in questionThemeTableData">
+				<td>{{questionTheme.theme}}</td>
+				<td>{{questionTheme.subject}}</td>
+				<td>{{questionTheme.reactive}}</td>
+				<td>{{questionTheme.active}}</td>
+				<td>{{questionTheme.proactive}}</td>
+			</tr>
+      </tbody>
+	</table>	
+	</div>
+</div>
+<div class="row">
+    <div class="panel panel-default">
+	<!-- Default panel contents -->
+	<div class="panel-heading">Summary Answer:</div>
+	<!-- Table -->
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>
+					Answer.Culture
+				</th>
+				<th>
+					Sum of Answer.Culture
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+		  <tr ng-repeat="(key, value) in cultureSummary">
+			<td>{{key}}</td>
+			<td>{{value}}</td>
+		  </tr>
+		</tbody>
+		</table>
+	</div>
+</div>
+<div class="row">
+    <div class="panel panel-default">
+	<!-- Default panel contents -->
+	<div class="panel-heading">Survey Detail Result:</div>
+	<!-- Table -->
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Responder</th>
+				<th>Company</th>
+				<th>Date</th>
+				<th>Question</th>
+				<th>Question.Title</th>
+				<th>Question.Subject</th>
+				<th>Question.Theme</th>
+				<th>Answer</th>
+				<th>Answer.Title</th>
+				<th>Answer.Culture</th>
+				<th>Answer.Result</th>
+			</tr>
+		</thead>
+		<tbody >
+		  <tr ng-repeat-start="info in reportInfo" ng-repeat-end>
+			<td>{{info.responder}}</td>
+			<td>{{info.company}}</td>
+			<td>{{info.date}}</td>
+			<td>{{info.question}}</td>
+			<td>{{info.questionTitle}}</td>
+			<td>{{info.questionSubject}}</td>
+			<td>{{info.questionTheme}}</td>
+			<td>{{info.answer}}</td>
+			<td>{{info.answerTitle}}</td>
+			<td>{{info.answerCulture}}</td>
+			<td>{{info.answerResult}}</td>
+		  </tr>		  
+		</tbody>
+		</table>
+	</div>
 </div>
