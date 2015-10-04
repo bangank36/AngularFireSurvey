@@ -7,6 +7,7 @@ angular
 		'ui.bootstrap',
         'ui.router',
 		'nvd3ChartDirectives',
+		'nvd3',
         'angularstrapServices',
         'angularstrapControllers',
 		'firebase'

@@ -6,3 +6,7 @@ table.table th[colspan] {
 	vertical-align: middle;
 	text-align: center;
 }
+nvd3[data="barChartData"] svg {
+	margin-left: 10%;
+	overflow: visible;
+}

@@ -135,8 +135,10 @@
 					});
 					$scope.questionTheme = questionThemeArray;
 					$scope.questionThemeTableData = transformQuestionThemeTableData();
+					getBarChartData();
 					$scope.$apply();
 				};
+				// Combine data to merge nested object into array
 				function transformQuestionThemeTableData() {
 					var tableData = [];
 					$scope.questionTheme.forEach(function(themeData, index) {
@@ -149,6 +151,7 @@
 					});
 					return tableData;
 				}
+				// Get data and set up for pie chart
 				function getPieChartData() {
 					$scope.pieChartCulture = [];
 					for (var key in $scope.cultureSummary) {
@@ -170,6 +173,66 @@
 					}
 					$scope.$apply();
 				}
+				// Get data and set up for multi horizontal bar chart
+				function getBarChartData() {
+					// Group code name to display on chart
+					var themeGroupName = {"goals": "G", "organization": "O", "leadership": "L", "emotional affection": "E"};
+					$scope.options = {
+						chart: {
+							type: 'multiBarHorizontalChart',
+							width: 700,
+							height: 450,
+							x: function(d){return d.label;},
+							y: function(d){return d.value;},
+							showControls: true,
+							showValues: true,
+							transitionDuration: 500,
+							xAxis: {
+								showMaxMin: false
+							},
+							yAxis: {
+								axisLabel: 'Values',
+								tickFormat: function(d){
+									return d3.format(',.2f')(d);
+								}
+							}
+						}
+					};
+					// Set bar chart initilize data 
+					var barChartData = [
+						{
+							"key": "Reactive", 
+							"color": "#4f81bd",
+							"values": []
+						},
+						{
+							"key": "Proactive", 
+							"color": "#819b4b",
+							"values": []
+						},
+						{
+							"key": "Active", 
+							"color": "#c0504d",
+							"values": []
+						}					
+					];
+					// Iterate over questionThemeTableData to add additional data
+					barChartData.forEach(function(chartValue) {
+						// Culture name to get value
+						var culture = chartValue.key.toLowerCase();
+						$scope.questionThemeTableData.forEach(function(groupData) {
+							// Get the code name of group plus subject to get "O - feeling"
+							var labelTheme = themeGroupName[groupData.theme] + " - " + groupData.subject.toLowerCase();
+							var chartData = {
+								label: labelTheme,
+								value: groupData[culture]
+							}
+							chartValue.values.push(chartData);
+						});
+					});
+					$scope.barChartData = barChartData;
+					$scope.$apply();					
+				}							
 			});					       
             return vm;
        }
