@@ -1,0 +1,8 @@
+table.table th[rowspan] {
+	vertical-align: middle;
+	text-align: center;
+}
+table.table th[colspan] {
+	vertical-align: middle;
+	text-align: center;
+}
