@@ -89,6 +89,8 @@
 								companyContactPerson: $scope.userName || $scope.userEmail.split("@")[0],
 								complete: false,
 								headerID: $scope.headerID
+							}).then(function(newReaction) {
+								$selectionArray = $firebaseArray(newReaction.child("answers"));
 							});
 							$scope.loadingUserInfo = false;
 							$scope.userStatus = "Start New Survey";
