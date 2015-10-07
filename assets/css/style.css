@@ -16,3 +16,6 @@ nvd3[data="barChartData"] svg {
 .detail-row:hover {
 	background-color: #F2F1EF;
 }
+.answers-choice {
+	margin: 0 auto;
+}

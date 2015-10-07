@@ -39,7 +39,7 @@
 						// iterate over matched headerID
 						reactions.forEach(function(id) {
 							if (data.val()[id].complete) {
-								$scope.complete = $scope.complete ? header.complete + 1 : 1;
+								$scope.complete = $scope.complete ? $scope.complete + 1 : 1;
 							} else {
 								$scope.inprogress = $scope.inprogress ? $scope.inprogress + 1 : 1;
 							}
