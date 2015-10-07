@@ -42,28 +42,30 @@
 			</li>
 			<li>
 				<ul ng-repeat="answer in qs.answers">
-					<li>
-						<a class="list-group-item">
-							<strong>{{$index + 1}}</strong>.
-							<label>{{answer.titleNL}}</label>
-						</a>
-					</li>
-					<li class="list-group-item">
-						<div class="form-inline">
-							<label class="radio">
-								<input type="radio" name="{{ answer.titleNL }}" value="0" question-id="{{ qs.ID }}" ng-checked="userSelection[qs.ID][answer.id] === 0 || true" ng-click="saveAnswer(qs.ID, answer.id, 0)">0
-							</label>
-							<label class="radio">
-								<input type="radio" name="{{ answer.titleNL }}" value="1" question-id="{{ qs.ID }}" ng-checked="userSelection[qs.ID][answer.id] === 1" ng-click="saveAnswer(qs.ID, answer.id, 1)">1
-							</label>
-							<label class="radio">
-								<input type="radio" name="{{ answer.titleNL }}" value="2" question-id="{{ qs.ID }}" ng-checked="userSelection[qs.ID][answer.id] === 2" ng-click="saveAnswer(qs.ID, answer.id, 2)">2
-							</label>
-							<label class="radio">
-								<input type="radio" name="{{ answer.titleNL }}" value="3" question-id="{{ qs.ID }}" ng-checked="userSelection[qs.ID][answer.id] === 3" ng-click="saveAnswer(qs.ID, answer.id, 3)">3
-							</label>
+					<li class="row list-group-item">
+						<div class="col-xs-8">
+							<a class="">
+								<strong>{{$index + 1}}</strong>.
+								<label>{{answer.titleNL}}</label>
+							</a>
 						</div>
-					</li>				
+						<div class="col-xs-4">
+							<div class="form-inline">
+								<label class="radio">
+									<input type="radio" name="{{ answer.titleNL }}" value="0" question-id="{{ qs.ID }}" ng-checked="userSelection[qs.ID][answer.id] === 0 || true" ng-click="saveAnswer(qs.ID, answer.id, 0)">0
+								</label>
+								<label class="radio">
+									<input type="radio" name="{{ answer.titleNL }}" value="1" question-id="{{ qs.ID }}" ng-checked="userSelection[qs.ID][answer.id] === 1" ng-click="saveAnswer(qs.ID, answer.id, 1)">1
+								</label>
+								<label class="radio">
+									<input type="radio" name="{{ answer.titleNL }}" value="2" question-id="{{ qs.ID }}" ng-checked="userSelection[qs.ID][answer.id] === 2" ng-click="saveAnswer(qs.ID, answer.id, 2)">2
+								</label>
+								<label class="radio">
+									<input type="radio" name="{{ answer.titleNL }}" value="3" question-id="{{ qs.ID }}" ng-checked="userSelection[qs.ID][answer.id] === 3" ng-click="saveAnswer(qs.ID, answer.id, 3)">3
+								</label>
+							</div>
+						</div>						
+					</li>			
 				</ul>
 			</li>
 			<div ng-show="errorID === qs.ID">
