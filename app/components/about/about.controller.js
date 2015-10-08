@@ -96,7 +96,7 @@
 							$scope.userStatus = "Start New Survey";
 							$scope.doSurvey = true;
 						});							
-					}													
+					}
 				});
 			};
 			
@@ -111,6 +111,13 @@
 				}
 				if (totalPoints > 3) {
 					$scope.errorID = questionID;
+					for (var key in choices) {
+						if (key.indexOf("$") === -1) {
+							choices[key] = 0;
+						}
+					}
+					$scope.userSelection[questionID] = choices;
+					$selectionArray.$save(choices);
 				} else {
 					choices[answerID] = point;
 					$selectionArray.$save(choices);
